@@ -1,0 +1,26 @@
+services:
+  database:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - ./database.env
+    volumes:
+      - local_pgdata:/var/lib/pgadmin
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    env_file:
+      - ./pgadmin.env
+    user: "$UID:$GID"
+    volumes:
+      - ./volumes/pgadmin:/var/lib/pgadmin
+
+volumes:
+  local_pgdata:
+  pgadmin-data:
