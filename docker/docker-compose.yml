@@ -2,23 +2,26 @@ services:
   database:
     image: postgres
     restart: always
+    container_name: db_container_ex03
     ports:
       - 5432:5432
     env_file:
       - ./database.env
     volumes:
-      - local_pgdata:/var/lib/pgadmin
+      - local_pgdata:/var/lib/postgresql/data
+      - ./volumes/datable:/home
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin4_container
+    container_name: pgadmin4_container_ex03
     restart: always
     ports:
       - "8888:80"
     env_file:
       - ./pgadmin.env
+    user: "$UID:$GID"
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - ./volumes/pgadmin:/var/lib/pgadmin
 
 volumes:
   local_pgdata:
