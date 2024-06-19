@@ -18,6 +18,7 @@ def connectDb() -> psycopg.connection:
     except Exception as msg:
         print(msg)
 
+
 def main():
 
     con: psycopg.connection = connectDb()
@@ -28,14 +29,11 @@ def main():
     RowName = []
     for name in res:
         RowName.append(name[0])
-    print(RowName)
     cursor = con.cursor()
     RowCount = []
     for data in RowName:
-        print(data)
         cursor.execute("SELECT count(event_type) from customer where event_type = %s", (data, ))
         RowCount.append(cursor.fetchone()[0])
-    print(RowCount)
     cursor.close()
     con.close()
     plt.pie(RowCount, labels=RowName, autopct='%0.1f%%')
