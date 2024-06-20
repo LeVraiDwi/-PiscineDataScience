@@ -8,6 +8,6 @@ begin
     insert into tmp (event_time, event_type, product_id, price, user_id, user_session) SELECT DISTINCT event_time, event_type, product_id, price, user_id, user_session FROM customer;
     DROP TABLE customer;
     ALTER TABLE tmp RENAME TO customer;
-end; 
+end;
 $$;
 COMMIT TRANSACTION;
