@@ -29,24 +29,8 @@ def main():
     res = cursor.fetchall()
     cursor.close()
     data = pd.DataFrame(res, columns=['date', 'user_id','price', 'user_session'])
-    
-    mean = data['price'].mean()
-    count = data['price'].count()
-    std = data['price'].std()
-    min = data['price'].min()
-    quart = data['price'].quantile(0.25)
-    mid = data['price'].quantile(0.50)
-    tier = data['price'].quantile(0.75)
-    max = data['price'].max()
 
-    print(count)
-    print(mean)
-    print(std)
-    print(min)
-    print(quart)
-    print(mid)
-    print(tier)
-    print(max)
+    CustomerFrequency = data.groupby[[data['user_id']]]
 
     averageBasket = data['price'].groupby([data['user_id'], data['user_session']]).sum()
     averageBasket = averageBasket.groupby(['user_id']).mean()

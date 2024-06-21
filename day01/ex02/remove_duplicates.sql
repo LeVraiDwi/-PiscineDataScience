@@ -1,13 +1,16 @@
 BEGIN TRANSACTION;
 do
 $$
-declare
-    t_name text;
 begin
-    create TABLE tmp (event_time timestamptz, event_type EventType, product_id int, price float, user_id int8, user_session varchar(255));
-    insert into tmp (event_time, event_type, product_id, price, user_id, user_session) SELECT DISTINCT event_time, event_type, product_id, price, user_id, user_session FROM customer;
-    DROP TABLE customer;
-    ALTER TABLE tmp RENAME TO customer;
+    create TABLE tmp as with remove_duplicates as (
+        SELECT *, LAG(event_time) over (partition by event_type, product_id, price, user_id, user_session ORDER BY event_time) as prevTime 
+        FROM customers)
+    SELECT event_time, event_type, product_id, price, user_id, user_session
+    FROM remove_duplicates
+    where event_time - prevTime > INTERVAL '1 second' or prevTime IS NULL;
+
+    DROP TABLE customers;
+    alter TABLE tmp RENAME TO customers;
 end;
 $$;
 COMMIT TRANSACTION;

@@ -25,7 +25,7 @@ def main():
 
     con: psycopg.connection = connectDb()
     cursor = con.cursor()
-    cursor.execute("SELECT event_time, user_id, price from customer where event_type = 'purchase' and event_time BETWEEN '2022-10-01' AND '2023-01-31'")
+    cursor.execute("SELECT event_time, user_id, price from customers where event_type = 'purchase' and event_time BETWEEN '2022-10-01' AND '2023-01-31'")
     res = cursor.fetchall()
     cursor.close()
     data = pd.DataFrame(res, columns=['date', 'user_id','price'])

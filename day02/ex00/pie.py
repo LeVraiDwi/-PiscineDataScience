@@ -32,7 +32,7 @@ def main():
     cursor = con.cursor()
     RowCount = []
     for data in RowName:
-        cursor.execute("SELECT count(event_type) from customer where event_type = %s", (data, ))
+        cursor.execute("SELECT count(event_type) from customers where event_type = %s", (data, ))
         RowCount.append(cursor.fetchone()[0])
     cursor.close()
     con.close()
