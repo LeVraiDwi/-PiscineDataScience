@@ -1,0 +1,7 @@
+*.csv
+volumes/*
+volumes/*/*.sql
+volumes/jupyter
+docker/volumes/pgadmin/sessions/*
+customer
+item
