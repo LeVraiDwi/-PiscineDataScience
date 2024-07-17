@@ -24,20 +24,15 @@ services:
       - ./volumes/pgadmin:/var/lib/pgadmin
 
   jupyter:
-    image: jupyter/datascience-notebook
+    image: jupyter:inc
+    build: ./jupyter
     volumes:
       - jupyter:/home/save
-    user: "$UID:$GID"
     ports:
       - 8888:8888
     container_name: jupyter_notebook
 
 volumes:
   jupyter:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./volumes/jupyter
   local_pgdata:
   pgadmin-data:
