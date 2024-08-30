@@ -3,3 +3,4 @@ SQLAlchemy
 pandas
 psycopg2-binary
 matplotlib
+scikit-learn
