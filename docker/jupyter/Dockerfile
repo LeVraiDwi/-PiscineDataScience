@@ -7,6 +7,10 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY ./src/ /app
 
+Run apt update
+
+RUN apt install -y graphviz
+
 # Install Jupyter Notebook
 RUN pip install jupyter
 
